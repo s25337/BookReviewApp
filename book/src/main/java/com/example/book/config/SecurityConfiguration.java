@@ -53,9 +53,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable()) // Wyłączenie CSRF (dla uproszczenia)
+                .headers(headers -> headers
+                        .frameOptions(frameOptions -> frameOptions.sameOrigin()) // Umożliwia ładowanie w ramkach z tej samej domeny
+                )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/public/**", "/login").permitAll() // Publiczny dostęp do określonych ścieżek
-                        .anyRequest().authenticated() // Wszystko inne wymaga logowania
+                        .anyRequest().permitAll()  //authenticated() // Wszystko inne wymaga logowania
                 )
                 .formLogin(form -> form
                         .loginPage("/login") // Własna strona logowania (opcjonalnie)

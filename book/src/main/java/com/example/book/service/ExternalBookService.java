@@ -26,7 +26,7 @@ public class ExternalBookService {
 
         List<Map<String, Object>> docs = (List<Map<String, Object>>) response.get("docs");
         List<Book> books = docs.stream().map(doc -> {
-            Book book = new Book();
+            Book book = new Book(null, "Unknown", null);
             book.setTitle((String) doc.get("title"));
             book.setGenre("Unknown");
             return book;
