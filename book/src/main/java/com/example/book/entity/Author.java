@@ -1,5 +1,6 @@
 package com.example.book.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Author {
     private String name;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties("author")  // Ignorujemy pole "author" w książkach
     private List<com.example.book.entity.Book> books;
 
     public Author(String name) {

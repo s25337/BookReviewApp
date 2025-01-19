@@ -1,5 +1,6 @@
 package com.example.book.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,10 +19,14 @@ public class Book {
 
     @ManyToOne(cascade = CascadeType.PERSIST) // Kaskadowe zapisywanie autora
     @JoinColumn(name = "author_id")
+    @JsonIgnoreProperties("books")  // Ignorujemy listę książek w autorze
     private Author author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> reviews;
+
+    private String review;
+    
+    @Column(name = "rating")
+    private int rating;
 
     public Book(String title, String genre, Author author) {
         this.title = title;
@@ -41,12 +46,7 @@ public class Book {
     public void setPublishedDate(LocalDate publishedDate) {
         this.publishedDate = publishedDate;
     }
-    public List<Review> getReviews() {
-        return reviews;
-    }
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
+
     public Long getId() {
         return id;
     }
@@ -75,4 +75,19 @@ public class Book {
         return author;
     }
 
+    public void setRating(int rating) {
+        this.rating=rating;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public void setAuthor(String s) {
+        this.author = new Author(s);
+    }
 }

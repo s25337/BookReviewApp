@@ -9,4 +9,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // Możesz tu dodać dodatkowe metody wyszukiwania, np.:
      List<Book> findByGenre(String genre);
      List<Book> findAllBooksByOrderByTitleAsc();
+
 }

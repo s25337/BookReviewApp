@@ -15,7 +15,14 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
-    public List<Book> findAll() {
+    public Book updateRating(Long bookId, int rating) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow();
+        book.setRating(rating);
+        return bookRepository.save(book);
+    }
+
+    public List<Book> findAllBooks() {
         return bookRepository.findAll();
     }
 

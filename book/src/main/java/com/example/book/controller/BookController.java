@@ -1,5 +1,6 @@
 package com.example.book.controller;
 
+import com.example.book.dto.RatingRequest;
 import com.example.book.entity.Book;
 import com.example.book.service.BookService;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +18,25 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/all")
-    public String getAllBooks() {
-       // return bookService.findAll();
-        return "all";
+    @PutMapping("/{id}/rating")
+    public ResponseEntity<Book> updateRating(@PathVariable Long id, @RequestBody RatingRequest ratingRequest) {
+        Book updatedBook = bookService.updateRating(id, ratingRequest.getRating());
+        return ResponseEntity.ok(updatedBook);
+    }
+
+    @GetMapping
+    public List<Book> getAllBooks() {
+        return bookService.findAllBooks();
     }
 
 
 
+
+    /*   @GetMapping("/all")
+    public String getAllBooks2() {
+        // return bookService.findAll();
+        return "all";
+    } */
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
